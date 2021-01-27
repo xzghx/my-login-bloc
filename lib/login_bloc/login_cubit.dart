@@ -63,13 +63,14 @@ class LoginCubit extends Cubit<LoginState> {
     UserLoginResult userLoginResult = await userRepository.login(data.toMap());
     //in case of success login add to auth bloc
     if (userLoginResult.result) {
-      authBloc.add(LoggedIn());
+      authBloc.add(LoggedIn(userLoginResult.user));
       emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+    } else {
+      String errorMessage = userLoginResult.message;
+      emit(state.copyWith(
+        formStatus: FormzStatus.submissionFailure,
+        message: errorMessage,
+      ));
     }
-    else
-      {
-        String errorMessage=userLoginResult.message;
-        emit(state.copyWith(formStatus: FormzStatus.submissionFailure,message:errorMessage,));
-      }
   }
 }
