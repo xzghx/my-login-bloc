@@ -12,9 +12,9 @@ final  String message;
   List<Object> get props => [];
 
   const LoginState({
-    this.userName,
-    this.password,
-    this.formzStatus,
+    this.userName=const UserName.pure(),
+    this.password =const Password.pure(),
+    this.formzStatus= FormzStatus.pure,
     this.message,
   });
 

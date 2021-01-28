@@ -15,10 +15,10 @@ class LoginCubit extends Cubit<LoginState> {
   final AuthBloc authBloc;
 
   LoginCubit(
-    LoginState state, {
+    {
     @required this.userRepository,
     @required this.authBloc,
-  }) : super(state);
+  }) : super(LoginState());
 
   void userNameChanged(String value) {
     final username = UserName.dirty(value);
