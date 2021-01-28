@@ -7,7 +7,7 @@ class Password extends FormzInput<String, PasswordValidationError> {
 
   Password.pure([String value = '']) : super.dirty(value);
 
-  static RegExp regExp = RegExp('r^');
+  static RegExp regExp = RegExp('r^(\w+)');
 
   @override
   validator(value) {

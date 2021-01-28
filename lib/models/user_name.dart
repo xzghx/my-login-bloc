@@ -7,7 +7,7 @@ class UserName extends FormzInput<String, UserNameValidationError> {
 
   UserName.pure([String value = '']) : super.dirty(value);
 
-  static RegExp regExp = RegExp('r^');
+  static RegExp regExp = RegExp('r^(\w+)');
 
   @override
   validator(value) {
