@@ -1,9 +1,14 @@
 
 import 'package:equatable/equatable.dart';
 
-class AuthState extends Equatable{
+abstract class AuthState extends Equatable{
   @override
-  // TODO: implement props
   List<Object> get props => throw UnimplementedError();
 
+}
+
+class UnKnown extends AuthState
+{
+  @override
+  List<Object> get props => [];
 }
