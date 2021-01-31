@@ -19,5 +19,5 @@ class User {
         this.lastName = json['lastName'],
         this.userName = json['userName'];
 
-  
+  static const empty = User(id: null, name: null, lastName: null, userName: null);
 }
