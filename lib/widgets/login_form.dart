@@ -39,7 +39,7 @@ class _PasswordInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) => TextField(
         onChanged: (newValue) => context.read<LoginCubit>().userPasswordChanged(newValue),
-        maxLength: 8,
+        maxLength: 10,
         decoration: InputDecoration(
           labelText: "Password",
           errorText: state.password.invalid ? "پسورد 8 کاراکتر پر شود" : null,
@@ -71,13 +71,9 @@ class _LoginButton extends StatelessWidget {
       buildWhen: (prev, current) => prev.formzStatus != current.formzStatus,
       builder: (context, state) {
         if (state.formzStatus.isSubmissionInProgress) {
-          print("buttom press :");
-          print("formzStatus.isSubmissionInProgress");
           return CircularProgressIndicator();
         } else
-          print("buttom press :");
           return RaisedButton(
-            key: const Key('loginForm_continue_raisedButton'),
             color: Colors.amberAccent,
             child: Text("Login"),
             onPressed: () =>

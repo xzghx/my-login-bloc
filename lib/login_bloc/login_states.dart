@@ -24,7 +24,7 @@ class LoginState extends Equatable {
     return LoginState(
         userName: userName ?? this.userName,
         password: password ?? this.password,
-        formzStatus: formzStatus ?? this.formzStatus,
+        formzStatus: formStatus ?? this.formzStatus,
         message: message ?? "");
   }
 }

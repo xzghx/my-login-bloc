@@ -61,7 +61,6 @@ class LoginCubit extends Cubit<LoginState> {
     );
 
     try {
-
       UserLoginResult userLoginResult = await userRepository.login(data.toMap());
       //in case of success login add to auth bloc
       if (userLoginResult.user != null) {
@@ -76,7 +75,7 @@ class LoginCubit extends Cubit<LoginState> {
           ),
         );
       }
-    } catch(error) {
+    } catch (error) {
       print("login error: $error");
       emit(
         state.copyWith(
