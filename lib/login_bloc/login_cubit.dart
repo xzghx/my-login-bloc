@@ -14,8 +14,7 @@ class LoginCubit extends Cubit<LoginState> {
   final UserRepository userRepository;
   final AuthBloc authBloc;
 
-  LoginCubit(
-    {
+  LoginCubit({
     @required this.userRepository,
     @required this.authBloc,
   }) : super(LoginState());
@@ -51,7 +50,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> loginRequested() async {
-    if (!state.formzStatus.isValid) return;
+    if (state.formzStatus.isInvalid) return;
 
     emit(state.copyWith(formStatus: FormzStatus.submissionInProgress));
 
@@ -60,17 +59,35 @@ class LoginCubit extends Cubit<LoginState> {
       userName: state.userName.value,
       password: state.password.value,
     );
-    UserLoginResult userLoginResult = await userRepository.login(data.toMap());
-    //in case of success login add to auth bloc
-    if (userLoginResult.result) {
-      authBloc.add(LoggedIn(userLoginResult.user));
-      emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
-    } else {
-      String errorMessage = userLoginResult.message;
-      emit(state.copyWith(
-        formStatus: FormzStatus.submissionFailure,
-        message: errorMessage,
-      ));
+
+    try {
+
+      UserLoginResult userLoginResult = await userRepository.login(data.toMap());
+      //in case of success login add to auth bloc
+      if (userLoginResult.user != null) {
+        authBloc.add(LoggedIn(userLoginResult.user));
+        emit(state.copyWith(formStatus: FormzStatus.submissionSuccess));
+      } else {
+        String errorMessage = userLoginResult.message;
+        emit(
+          state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            message: errorMessage,
+          ),
+        );
+      }
+    } catch(error) {
+      print("login error: $error");
+      emit(
+        state.copyWith(
+            formStatus: FormzStatus.submissionFailure,
+            message: "Some Error Happened.Please try later."),
+      );
     }
+  }
+
+  @override
+  String toString() {
+    return "login form State: ${state.formzStatus.toString()}";
   }
 }
