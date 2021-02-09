@@ -1,6 +1,7 @@
 import 'package:app_login_signin/auth_bloc/auth_bloc.dart';
 import 'package:app_login_signin/auth_bloc/auth_exports.dart';
 import 'package:app_login_signin/data/user_repository.dart';
+import 'package:app_login_signin/simple_bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +9,7 @@ import 'pages/login_page.dart';
 
 void main() {
   runApp(MyApp());
+  Bloc.observer =SimpleBlocObserver();
 }
 
 class MyApp extends StatelessWidget {
