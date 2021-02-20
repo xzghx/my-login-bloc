@@ -1,8 +1,9 @@
-import 'package:app_login_signin/login_bloc/login_bloc_exports.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+
+import '../login_bloc/login_bloc_exports.dart';
+import '../pages/home_page.dart';
 
 class LoginForm extends StatelessWidget {
   @override
@@ -17,6 +18,8 @@ class LoginForm extends StatelessWidget {
                 content: Text(state.message),
               ),
             );
+        else if (state.formzStatus == FormzStatus.submissionSuccess)
+          Navigator.of(context).push(HomePage.route());
       },
       child: SingleChildScrollView(
         child: Column(

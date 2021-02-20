@@ -7,8 +7,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(UserRepository userRepository) : super(AuthState.unknown());
 
   @override
-  Stream<AuthState> mapEventToState(AuthEvent event) {
-    // TODO: implement mapEventToState
-    throw UnimplementedError();
+  Stream<AuthState> mapEventToState(AuthEvent event) async* {
+    if (event is LoggedIn) yield* _mapLoggedInToState(event);
+  }
+
+  Stream<AuthState> _mapLoggedInToState(LoggedIn event) async* {
+    yield AuthState.authenticated(event.user);
   }
 }
