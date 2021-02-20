@@ -8,6 +8,7 @@ import '../pages/home_page.dart';
 class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.formzStatus == FormzStatus.submissionFailure)
@@ -25,8 +26,8 @@ class LoginForm extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 20),
-            _UserNameInput(),
-            _PasswordInput(),
+            _UserNameInput(width),
+            _PasswordInput(width),
             _LoginButton(),
           ],
         ),
@@ -36,16 +37,24 @@ class LoginForm extends StatelessWidget {
 }
 
 class _PasswordInput extends StatelessWidget {
+  final double width;
+
+  _PasswordInput(this.width);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
       buildWhen: (previous, current) => previous.password != current.password,
-      builder: (context, state) => TextField(
-        onChanged: (newValue) => context.read<LoginCubit>().userPasswordChanged(newValue),
-        maxLength: 10,
-        decoration: InputDecoration(
-          labelText: "Password",
-          errorText: state.password.invalid ? "پسورد 8 کاراکتر پر شود" : null,
+      builder: (context, state) => Container(
+        width: width / 2,
+        child: TextField(
+          onChanged: (newValue) => context.read<LoginCubit>().userPasswordChanged(newValue),
+          maxLength: 10,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText: "رمز عبور",
+            errorText: state.password.invalid ? "پسورد 8 کاراکتر پر شود" : null,
+          ),
         ),
       ),
     );
@@ -53,15 +62,22 @@ class _PasswordInput extends StatelessWidget {
 }
 
 class _UserNameInput extends StatelessWidget {
+  final double width;
+
+  _UserNameInput(this.width);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
       buildWhen: (previous, current) => previous.userName != current.userName,
-      builder: (context, state) => TextField(
-        onChanged: (newValue) => context.read<LoginCubit>().userNameChanged(newValue),
-        decoration: InputDecoration(
-            labelText: "UserName",
-            errorText: state.userName.invalid ? "نام کاربری وارد شود" : null),
+      builder: (context, state) => Container(
+        width: width / 2,
+        child: TextField(
+          onChanged: (newValue) => context.read<LoginCubit>().userNameChanged(newValue),
+          decoration: InputDecoration(
+              labelText: "نام کاربری",
+              errorText: state.userName.invalid ? "نام کاربری وارد شود" : null),
+        ),
       ),
     );
   }
@@ -78,7 +94,7 @@ class _LoginButton extends StatelessWidget {
         } else
           return RaisedButton(
             color: Colors.amberAccent,
-            child: Text("Login"),
+            child: Text("ورود"),
             onPressed: () =>
                 state.formzStatus.isInvalid ? null : context.read<LoginCubit>().loginRequested(),
           );
